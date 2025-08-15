@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="./css/huong_dan.css">
+}
+        <div class="main">
+            <!-- === NỘI DUNG MỚI ĐƯỢC THÊM VÀO === -->
+            <div class="main-title">HƯỚNG DẪN ĐĂNG KÝ THẺ THƯ VIỆN</div>
+
+            <!-- Mục 1: Hướng dẫn thanh toán -->
+            <div class="accordion-item">
+                <div class="accordion-header">I. HƯỚNG DẪN THANH TOÁN</div>
+                <div class="accordion-content">
+                    <div class="qr-code">
+                        <p>QUÝ KHÁCH QUÉT MÃ QR ĐỂ THANH TOÁN</p>
+                        <img src="~/css/74d17ef4-ffca-4f00-8752-6b90c5496148.jpg" alt="QR Code BIDV">
+                        <p>NGÂN HÀNG TMCP ĐẦU TƯ VÀ PHÁT TRIỂN VIỆT NAM</p>
+                        <p>Tên tài khoản: THƯ VIỆN QUỐC GIA VIỆT NAM</p>
+                        <p>Số tài khoản: 2601603708</p>
+                    </div>
+                    <p style="color: red;"><b>Quý khách có thể chọn thanh toán trực tuyến qua chuyển khoản hoặc thanh toán khi nhận thẻ.</b></p>
+                    <div>Xin lưu ý</div>
+                    <div>Đối với Bạn đọc đăng ký nhận thẻ tại điểm bán thẻ</div>
+                    <div>Đối với Bạn đọc thanh toán trực tuyến, bạn chuyển khoản theo mã QR CODE ở trên với nội dung chuyển khoản là <span style="color: red; font-weight: bold;">mã đăng ký</span> của mình</div>
+                    <div>Vào trang <a href="tracuu.html" style="text-decoration: underline; font-weight: 800; color: #8d1e1e; text-transform: uppercase;">tra cứu thông tin thẻ</a></div>
+                    <div>Nhập các thông tin: Họ tên, ngày sinh, số điện thoại để xem <span style="color: red; font-weight: bold;">mã đăng ký</span>và trạng thái của đơn đăng ký</div>
+                    <div>Nếu trạng thái thẻ là <span style="color: red; font-weight: bold;">Đã được duyệt</span>, xin quý khách vui lòng đến lấy thẻ tại thư viện</div>
+                    <div>Để theo dõi đơn đăng ký của mình, xin quý khách vui lòng vào trang <a href="tracuu" style="text-decoration: underline; font-weight: 800; color: #8d1e1e; text-transform: uppercase;">tra cứu thông tin thẻ</a> và làm theo hướng dẫn.</div>
+                    <div style="font-weight: 700; color: red; text-transform: uppercase;">Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của Thư viện quốc gia Việt Nam</div>
+                    <div>
+                        <a href="/" style="text-decoration: underline; font-weight: 800; color: #8d1e1e; text-transform: uppercase;">quay về trang chủ</a>&nbsp;
+                        <a href="tracuu" style="text-decoration: underline; font-weight: 800; color: #8d1e1e; text-transform: uppercase;">tra cứu thông tin thẻ</a>&nbsp;
+                        <a href="dky_the" style="text-decoration: underline; font-weight: 800; color: #8d1e1e; text-transform: uppercase;">đăng ký thẻ</a>&nbsp;
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mục 2: Thủ tục làm thẻ -->
+            <div class="accordion-item">
+                <div class="accordion-header">II. THỦ TỤC LÀM THẺ</div>
+                <div class="accordion-content">
+                    <div class="daumuc">1. <span style="text-decoration: underline;">Đối tượng được cấp thẻ đọc</span>:</div>
+                    <p>Tất cả các công dân Việt Nam và người nước ngoài đang lưu trú tại Việt Nam có CHỨNG MINH THƯ (HOẶC HỘ CHIẾU).</p>
+                    <div class="daumuc">2. <span style="text-decoration: underline;">Điều kiện làm thẻ trong thư viện</span>:</div>
+                    <p>Mang theo Chứng minh thư hoặc Hộ chiếu (Xin lưu lý bạn đọc không cần mang theo ảnh, ảnh sẽ được chụp trực tiếp khi đến làm thẻ)</p>
+                    <div class="daumuc">3. <span style="text-decoration: underline;">Thời gian nhận lại thẻ đọc</span>:</div>
+                    <p>Bạn đọc có thể nhận lại thẻ 5-10 phút sau khi khai form thông tin người làm thẻ</p>
+                    <div class="daumuc">4. <span style="text-decoration: underline;">Lệ phí</span>: <em style=" font-weight: normal;">(Áp dụng cho cả việc cấp thẻ mới và đổi thẻ đã hết hạn):</em></div>
+                    <p>
+                        Đối với cá nhân là người Việt Nam hoặc người nước ngoài sống và làm việc tại Việt Nam: <b>120.000đ</b> <em>(Một trăm hai mươi nghìn đồng)</em>/thẻ/năm (12 tháng)
+                        Đối với cán bộ hưu trí: <b>50.000đ</b> <em>(Năm mươi nghìn đồng)/thẻ/năm (12 tháng)</em>
+                        Thẻ đọc dành cho Nhà nghiên cứu và Doanh nhân (thẻ vàng): <b>Loại 1 năm: 120.000đ</b> <em>(Một trăm hai mươi nghìn đồng)</em> + <b>540.000đ</b> lệ phí tham gia Câu lạc bộ Nhà nghiên cứu - Doanh Nhân [<a href="https://nlv.gov.vn/tro-giup-ban-doc/noi-quy-phong-doc-danh-cho-nha-nghien-cuu-va-doanh-nhan.html">xem thêm</a>] <br> Thẻ Thư viện Văn hóa Thiếu nhi: <b>40.000đ</b> <em>(Bốn mươi nghìn đồng)</em>/thẻ/năm (12 tháng) [<a href="https://nlv.gov.vn/tro-giup-ban-doc/thu-tuc-lam-the-thu-vien-van-hoa-thieu-nhi.htmls">xem thêm</a>]
+                    </p>
+                    <div class="daumuc">5. <span style="text-decoration: underline;">Những trường hợp được miễn lệ phí làm thẻ thư viện</span>:</div>
+                    <p>Miễn phí làm thẻ với các đối tượng được hưởng  chính sách ưu đãi – hưởng thụ văn hóa, được qui định tại điều 2, quyết định số <a href="https://chinhphu.vn/default.aspx?pageid=27160&docid=12166">170/2003/QĐ-TTg</a> ngày 14/8/2003 của Thủ tướng chính phủ, Thư viện Quốc gia Việt Nam không thu phí Thẻ bạn đọc.</p>
+                    <div class="daumuc">6. <span style="text-decoration: underline;">Thời gian làm việc:</span></div>
+                    <p>Sáng: từ 8h00 đến 11h30 <br> Chiều: từ 13h30 đến 16h30 <br> Từ thứ 2 đến thứ 7 hàng tuần <em>(trừ các ngày nghỉ lễ quốc gia, và ngày nội dịch theo qui định TVQG)</em> <br> <a href="https://nlv.gov.vn/tro-giup-ban-doc/lich-phuc-vu.html">[Chi tiết lịch phục vụ]</a></p>
+                    <div class="daumuc">7. <span style="text-decoration: underline;">Liên hệ trực tiếp bộ phận cấp thẻ</span>:</div>
+                    <p>Bộ phận cấp thẻ TVQG <br>Địa chỉ: Số 31 Tràng Thi - Hoàn Kiếm - Hà Nội <br>Số điện thoại: 024-38254938</p>
+                </div>
+            </div>
+
+            <!-- Mục 3: Thủ tục làm thẻ thư viện văn hóa thiếu nhi -->
+            <div class="accordion-item">
+                <div class="accordion-header">III. THỦ TỤC LÀM THẺ THƯ VIỆN VĂN HÓA THIẾU NHI</div>
+                <div class="accordion-content">
+                    <div class="daumuc">Thủ tục làm thẻ Thư viện Văn hóa Thiếu nhi:</div>
+                    <div>1. Giấy khai sinh (đối chiếu)</div>
+                    <div>2. Lệ phí 40.000đ/thẻ/năm</div>
+                    <div>3. Đưa trẻ đến khai hồ sơ và chụp ảnh</div>
+                    <div><b>Chú ý: </b>Đối với trẻ từ 3-5 tuổi: làm thẻ cặp 80.000đ/02 thẻ (Thẻ cho con và thẻ người giám hộ).</div>
+                    <div><b>Giờ làm thẻ: </b>Từ thứ Hai đến thứ Bảy</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_Sáng: Từ 8h00' - 11h30'</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Chiều: Từ 13h30' - 16h30'</div>
+                    <div class="daumuc">Chi tiết, vui lòng liên hệ trực tiếp bộ phận cấp thẻ:</div>
+                    <p>Bộ phận cấp thẻ TVQG <br>Địa chỉ: Số 31 Tràng Thi - Hoàn Kiếm - Hà Nội <br>Số điện thoại: 024-38254938</p>
+                </div>
+            </div>
+
+            <!-- Mục 4: Nội quy thẻ viện -->
+            <div class="accordion-item">
+                <div class="accordion-header">IV. NỘI QUY THẺ VIỆN</div>
+                <div class="accordion-content">
+                    <p><strong>Bạn đọc đến đọc sách, ngoài việc chấp hành các quy định chung của thư viện cần thực hiện các quy định sau đây:</strong></p>
+                    <ul>
+                        <li>Không mang túi xách, cặp, sách, báo – tạp chí in vào phòng đọc (chấp nhận sách, báo dạng photocopy)</li>
+                        <li>Xuất trình thẻ đọc, chứng minh thư, giấy giới thiệu tại bộ phận thủ thư.</li>
+                        <li>Chỉ đọc tại chỗ, không mang tài liệu ra khỏi phòng đọc, ra ngoài thư viện</li>
+                        <li>Không cắt xén, xé trang tài liệu, khi phát hiện sách thiếu trang, yêu cầu báo ngay cho thủ thư, nếu không bạn đọc hoàn toàn chịu trách nhiệm</li>
+                        <li>Bạn đọc nào vi phạm nội quy, tùy từng mức độ sẽ có hình thức xử lý thích hợp: thu thẻ đọc, bồi thường, thông báo về cơ quan, trường học…hoặc truy tố trước pháp luật</li>
+                        <li>Không hút thuốc, chất dễ cháy nổ vào phòng đọc, giữ gìn vệ sinh chung</li>
+                        <li>Không nói chuyện riêng, không nghe điện thoại tại phòng đọc, yêu cầu điện thoại để chế độ rung</li>
+                        <li>Khi có nhu cầu photocopy tài liệu, cần liên hệ với thủ thư để được chỉ dẫn cụ thể.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mục 5: Video hướng dẫn -->
+            <div class="accordion-item">
+                <div class="accordion-header">V. VIDEO HƯỚNG DẪN</div>
+                <div class="accordion-content">
+                    <div class="video-container">
+                        <div class="video-wrapper">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/r_9aD7Oj8RM?si=QwPA9840fiO0kih3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    <script src="~/js/huong_dan.js"></script>

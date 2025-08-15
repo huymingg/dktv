@@ -1,0 +1,263 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px dotted black; */
+}
+
+html, body {
+    height: 100%;
+}
+
+body{
+    font-family: Tahoma, Arial, sans-serif;
+    display: flex;
+  flex-direction: column;
+  min-height: 100%; /* Giúp body luôn chiếm toàn bộ chiều cao màn hình */
+}
+
+.header{
+    background: #8d1e1e;
+    color: white;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.logo{
+    width: 48%;
+    padding-left: 20%;
+}
+
+.logo-title {
+    text-align: left;
+    color: white;
+    background-color: #8d1e1e;
+    margin: 0px;
+    font-weight: bold;
+    font-size: 28px;
+    text-decoration: underline;
+    width: 100%;
+    margin-left: auto;
+}
+
+.logo-title2 {
+    width: 100%;
+    text-align: left;
+    margin-left: auto;
+}
+
+.container{
+    flex: 1 0 auto;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 55%;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.menu a{
+    text-decoration: none;
+    color: black;
+}
+
+.menu a:hover{
+    text-decoration: none;
+}
+
+.menu li{
+    font-size: 14px;
+    padding: 10px 10px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    transition: 0.3s;
+}
+
+ .menu li span{
+    font-size: 16px;
+    color: black;
+} 
+
+.menu li:hover{
+    background: #8d1e1e;
+    color: white;
+    cursor: pointer;
+    /* text-decoration: none; */
+}
+
+.menu li.active-menu {
+    background: #8d1e1e !important;
+    color: white !important;
+}
+
+.menu li.active-menu span {
+    color: white !important;
+}
+
+.menu a li:hover .glyphicon,
+.menu a li.active-menu .glyphicon {
+    color: white !important;
+}
+
+.menu a li .glyphicon {
+    color: inherit !important;
+    transition: color 0.2s;
+}
+
+.main{
+    border: 1px solid #8d1e1e;
+}
+
+.main-menu{
+    display: flex;
+    justify-content: center;   /* căn giữa các item bên trong */
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    list-style: none;
+    gap: 5px;
+}
+
+.main-menu a{
+    text-decoration: none;
+    color: black;
+}
+
+.main-menu a:hover{
+    text-decoration: none;
+}
+
+.main-menu li{
+    font-size: 14px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    transition: 0.3s;
+}
+
+.main-menu li:hover{
+    background: #8d1e1e;
+    color: white;
+    cursor: pointer;
+}
+
+.lookup-form{
+    width: 100%;
+    padding-top: 10px;
+}
+
+.form-row{
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.form-row label {
+    width: 40%;
+    font-size: 14px;
+    color: #222;
+    font-weight: 500;
+    text-align: right;
+    margin-right: 18px;
+    font-weight: bold;
+}
+
+.form-row input[type="text"],
+.form-row input[type="date"],
+.form-row input[type="number"] {
+    /* flex: 0; */
+    width: 40%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #fafafa;
+    transition: border 0.2s;
+}
+
+.form-row input[type="text"]:focus,
+.form-row input[type="date"]:focus,
+.form-row input[type="number"]:focus {
+/* .form-row textarea:focus { */
+    border: 1.5px solid #8d1e1e;
+    outline: none;
+}
+
+.captcha-row {
+    align-items: flex-start;
+}
+
+.captcha-block {
+    display: flex;
+    flex-direction: column;
+    /* flex: 1; */
+    width: 40%;
+}
+
+.captcha-img {
+    width: 100%;
+    max-width: 220px;
+    height: 48px;
+    object-fit: cover;
+    margin-bottom: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.captcha-block input[type="text"] {
+    width: 100%;
+}
+
+.form-row-btn {
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.submit-btn {
+    margin-right: 15px;
+    background: #8d1e1e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submit-btn:hover {
+    background: #a13e3e;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.footer-content {
+    text-align: center;
+    line-height: 1.7;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.main-menu li.active {
+    background: #8d1e1e;
+    color: white;
+}

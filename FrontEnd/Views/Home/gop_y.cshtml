@@ -1,0 +1,203 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/gop_y.css">
+}
+        <div class="main">
+            <div class="title"><h3 style="font-size: 24px;">GÓP Ý</h3></div>
+            <div class="feedback">
+                <form class="feedback-form">
+                    <div id="feedback-alert" class="alert-banner" style="display: none;">
+                        <span id="alert-message"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+                    <div class="form-row">
+                        <label for="name">Họ tên <span style="color: red;">(*)</span></label>
+                        <input type="text" id="name" placeholder="Nhập Họ Và Tên Của Bạn" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" id="address" placeholder="Nhập địa chỉ của bạn">
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+                    </div>
+                    <div class="form-row">
+                        <label for="phone">Điện thoại <span style="color: red;">(*)</span></label>
+                        <input type="text" id="phone" placeholder="Nhập số điện thoại của bạn" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="subject">Tiêu đề <span style="color: red;">(*)</span></label>
+                        <input type="text" id="subject" placeholder="Tiêu đề" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="content">Nội dung góp ý <span style="color: red;">(*)</span></label>
+                        <textarea id="content" placeholder="Nội dung" required></textarea>
+                    </div>
+                    <div class="form-row captcha-row">
+                        <label for="captcha">Mã xác thực <span style="color: red;">(*)</span></label>
+                        <div class="captcha-block">
+                            <canvas id="captcha" width="240" height="80"></canvas>
+                            <input type="text" id="captcha" placeholder="Nhập mã xác thực bên trên" required>
+                        </div>
+                    </div>
+                    <div class="form-row form-row-btn">
+                        <button type="submit" class="submit-btn">Gửi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<script>
+    $(document).ready(function() {
+        let currentCatchaCode = '';
+
+        // --- HÀM TẠO MÃ CAPTCHA ---
+            function generateCaptcha() {
+            const canvas = document.getElementById("captcha");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let captchaCode = "";
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let i = 0; i < 4; i++) {
+                let char = chars.charAt(Math.floor(Math.random() * chars.length));
+                captchaCode += char;
+                let fontSize = Math.floor(Math.random() * 10) + 28;
+                ctx.font = `bold ${fontSize}px Arial`;
+                ctx.fillStyle = `rgb(${Math.floor(Math.random()*150)},${Math.floor(Math.random()*150)},${Math.floor(Math.random()*150)})`;
+                let x = 30 + i * 40;
+                let y = canvas.height / 2 + (Math.random() * 20 - 10);
+                let angle = (Math.random() * 30 - 15) * (Math.PI / 180);
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+            }
+            currentCatchaCode = captchaCode;
+
+            // --- THÊM NHIỄU (ĐƯỜNG THẲNG NGẪU NHIÊN) ---
+            for (let i = 0; i < 5; i++) {
+                ctx.strokeStyle = "#ccc";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height
+                );
+                ctx.lineTo(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height
+                );
+                ctx.stroke();
+            }
+
+            // --- THÊM NHIỄU (ĐIỂM NGẪU NHIÊN) ---
+            for (let i = 0; i < 30; i++) {
+                ctx.fillStyle = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.3)`;
+                ctx.beginPath();
+                ctx.arc(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    1, // Bán kính của điểm
+                    0,
+                    2 * Math.PI
+                );
+                ctx.fill();
+            }
+        }
+
+        // --- CÁC QUY TẮC VALIDATION ---
+        const validators = {
+            required: value => value.trim() !== '',
+            phone: value => /^0\d{9}$/.test(value.trim()),
+            captcha: value => value.toUpperCase() === currentCatchaCode.toUpperCase()
+        };
+
+        // --- DANH SÁCH CÁC TRƯỜNG CẦN KIỂM TRA (THEO THỨ TỰ) ---
+        const validationRules = [
+            { selector: '#name',    rule: validators.required, message: 'Vui lòng nhập họ và tên.' },
+            { selector: '#phone',   rule: validators.phone,    message: 'Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng 0).' },
+            { selector: '#subject', rule: validators.required, message: 'Vui lòng nhập tiêu đề.' },
+            { selector: '#content', rule: validators.required, message: 'Vui lòng nhập nội dung góp ý.' },
+            { selector: '#captcha', rule: validators.captcha,  message: 'Vui lòng nhập đúng mã xác thực.' }
+        ];
+
+        // --- HÀM KIỂM TRA TOÀN BỘ FORM (VIẾT LẠI) ---
+        function validateForm() {
+            // Lặp qua từng quy tắc theo đúng thứ tự đã định nghĩa
+            for (const validation of validationRules) {
+                const field = $(validation.selector);
+                const value = field.val();
+
+                // Nếu quy tắc kiểm tra thất bại
+                if (!validation.rule(value)) {
+                    // Hiển thị thông báo lỗi cụ thể
+                    $('#alert-message').text(validation.message);
+                    $('#feedback-alert').show();
+                    // Di chuyển con trỏ tới ô bị lỗi
+                    field.focus();
+                    // Dừng lại và báo cáo form không hợp lệ
+                    return false;
+                }
+            }
+
+            // Nếu tất cả đều hợp lệ, ẩn thông báo và báo cáo form hợp lệ
+            $('#feedback-alert').hide();
+            return true;
+        }
+
+        // --- CÁC HÀM XỬ LÝ KHÁC (GIỮ NGUYÊN) ---
+        function HandleSave() {
+            if (!validateForm()) {
+                generateCaptcha(); // Tạo captcha mới nếu nhập sai
+                return;
+            }
+            let dataToSend = {
+                "id": "",
+                "fullname": $('#name').val(), "address": $('#address').val(), "email": $('#email').val(),
+                "tel": $('#phone').val(), "title": $('#subject').val(), "content": $('#content').val(),
+                "createdDate": new Date().toISOString(), "status": "Tạo mới"
+            };
+            PostFeedbackCard(dataToSend);
+        }
+
+        function resetForm() {
+            $('.feedback-form')[0].reset();
+            generateCaptcha();
+            $('#feedback-alert').hide();
+        }
+
+        function PostFeedbackCard(dataToSend) {
+            $.ajax({
+                url: "http://localhost:5070/api/Feedback/feedback-card",
+                type: "POST", contentType: "application/json", data: JSON.stringify(dataToSend),
+                success: function(response) {
+                    alert(response.message);
+                    resetForm();
+                },
+                error: function() {
+                    alert("Đã xảy ra lỗi, không thể gửi góp ý.");
+                }
+            });
+        }
+
+        // --- GẮN SỰ KIỆN VÀ KHỞI TẠO ---
+        $(".submit-btn").on("click", function(e) {
+            e.preventDefault();
+            HandleSave();
+        });
+
+        generateCaptcha();
+    });
+</script>
+    @* <script src="~/js/gop_y.js"></script> *@

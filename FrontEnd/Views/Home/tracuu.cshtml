@@ -1,0 +1,366 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="./css/tracuu.css">
+}
+
+        <div class="main">
+            <div class="main-title"><h3 style="text-align: center; padding: 5px;">TRA CỨU THÔNG TIN ĐĂNG KÝ THẺ THƯ VIỆN</h3></div>
+            <ul class="main-menu">
+                <a href="#" id="tab-personal-info">
+                <li class="active">Theo thông tin cá nhân</li></a>
+                <a href="#" id="tab-reg-code">
+                <li>Theo mã đăng ký</li></a>
+            </ul>
+
+            <div class="main-content">
+                <form class="lookup-form">
+                    <div class="form-row personal-info-field">
+                        <label for="name">Họ tên <span style="color: red;">(*)</span></label>
+                        <input type="text" id="name" placeholder="Nhập Họ Và Tên Của Bạn" required>
+                    </div>
+                    <div class="form-row personal-info-field">
+                        <label for="birthday">Ngày sinh <span style="color: red;">(*)</span></label>
+                        <input type="date" id="birthday" required>
+                    </div>
+                    <div class="form-row personal-info-field">
+                        <label for="phone-number">Điện thoại <span style="color: red;">(*)</span></label>
+                        <input type="number" id="phone-number" placeholder="Nhập vào số điện thoại bạn đã dùng để đăng ký" required>
+                    </div>
+
+                    <div class="form-row reg-code-field" style="display: none;">
+                        <label for="reg-code">Mã đăng ký <span style="color: red;">(*)</span></label>
+                        <input type="text" id="reg-code" placeholder="Nhập mã đăng ký" required>
+                    </div>
+
+                    <div class="form-row captcha-row">
+                        <label for="captcha">Mã xác thực <span style="color: red;">(*)</span></label>
+                        <div class="captcha-block">
+                            <canvas id="captcha" width="240" height="80"></canvas>
+                            <input type="text" id="captcha-input" placeholder="Nhập mã xác thực bên trên" required>
+                        </div>
+                    </div>
+                    <div class="form-row form-row-btn">
+                        <button type="submit" class="submit-btn">Gửi</button>
+                    </div>
+                </form>
+        <div class="panel panel-default" id="lookup-results" style="display: none; margin-top: 30px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="font-weight: bold;">Kết quả tra cứu</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>Mã đăng ký:</strong> <span id="result-reg-code" style="font-weight: bold; color: #8d1e1e;"></span></p>
+                        <p><strong>Tình trạng xử lý:</strong> <span id="result-status" style="font-weight: bold; color: green;"></span></p>
+                        <p style="font-weight: bold; color: #185db2;">Bạn đã thanh toán chi phí làm thẻ!</p>
+
+                        <div class="panel panel-default" style="max-width: 450px; margin: 20px auto; border-color: #333;">
+
+                            <div class="panel-heading text-center" style="background-color: #f5f5f5; border-bottom: 2px solid #333;">
+                                <h4 style="margin: 0; font-weight: bold;">THƯ VIỆN QUỐC GIA VIỆT NAM</h4>
+                                <p style="margin: 5px 0 0 0; font-weight: bold;">NATIONAL LIBRARY OF VIETNAM</p>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <h4 class="text-center" style="margin-top: 0; margin-bottom: 15px;">
+                                    <b>THẺ BẠN ĐỌC</b>
+                                </h4>
+
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="media-object" id="card-photo" src="" alt="Ảnh thẻ" style="width: 90px; height: 120px; border: 1px solid #ddd;">
+                                    </div>
+                                    <div class="media-body">
+                                        <p><strong>Họ tên:</strong> <span id="card-fullname"></span></p>
+                                        <p><strong>Ngày sinh:</strong> <span id="card-dob"></span></p>
+                                        <p><strong>Đơn vị:</strong> <span id="card-institution"></span></p>
+                                        <p><strong>Ngày cấp:</strong> <span id="card-issue-date"></span></p>
+                                        <p><strong>Hết hạn:</strong> <span id="card-expiry-date"></span></p>
+
+                                        <div style="display: flex; align-items: center; margin-top: 5px;">
+                                            <strong style="margin-right: 5px;">Mã thẻ:</strong>
+                                            <svg id="card-barcode"></svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+                // --- HÀM TÁI SỬ DỤNG ĐỂ HIỂN THỊ DỮ LIỆU LÊN THẺ ---
+                function displayCardData(data) {
+                // --- Sửa lỗi 1: Hiển thị ảnh ---
+                // Dữ liệu ảnh có thể là Base64 (từ sessionStorage) hoặc đường dẫn (từ API)
+                const photoInfo = data.photoData || data.photo; // Tên thuộc tính từ API là "photo" (chữ thường)
+                const imageElement = document.getElementById('card-photo');
+
+                if (photoInfo) {
+                    // Nếu là đường dẫn từ API (bắt đầu bằng '/'), ta cần thêm địa chỉ server vào
+                    if (photoInfo.startsWith('/uploads/')) {
+                        imageElement.src = 'http://localhost:5070' + photoInfo;
+                    } else {
+                        // Nếu là dữ liệu Base64 từ sessionStorage, dùng trực tiếp
+                        imageElement.src = photoInfo;
+                    }
+                }
+
+                // --- Sửa lỗi 2: Dùng đúng tên thuộc tính chữ thường từ API ---
+                // Dữ liệu từ API trả về JSON với các thuộc tính là chữ thường (camelCase)
+                document.getElementById('result-reg-code').textContent = data.registrationCode;
+                document.getElementById('result-status').textContent = data.status;
+                document.getElementById('card-fullname').textContent = data.fullName;
+                document.getElementById('card-institution').textContent = data.office;
+
+                // Định dạng ngày tháng, sử dụng tên thuộc tính chữ thường
+                const dob = new Date(data.dob);
+                document.getElementById('card-dob').textContent = ('0' + dob.getDate()).slice(-2) + '/' + ('0' + (dob.getMonth() + 1)).slice(-2) + '/' + dob.getFullYear();
+
+                const issueDate = new Date(data.createdDate); // Tên từ API là createdDate
+                document.getElementById('card-issue-date').textContent = ('0' + issueDate.getDate()).slice(-2) + '/' + ('0' + (issueDate.getMonth() + 1)).slice(-2) + '/' + issueDate.getFullYear();
+
+                const expiryDate = new Date(data.expiredDate); // Tên từ API là expiredDate
+                document.getElementById('card-expiry-date').textContent = ('0' + expiryDate.getDate()).slice(-2) + '/' + ('0' + (expiryDate.getMonth() + 1)).slice(-2) + '/' + expiryDate.getFullYear();
+
+                // Tạo mã vạch
+                JsBarcode("#card-barcode", data.registrationCode, {
+                    format: "CODE128", height: 30, width: 3, displayValue: false
+                });
+
+                // Hiển thị khu vực kết quả
+                document.getElementById('lookup-results').style.display = 'block';
+            }
+
+            // --- TỰ ĐỘNG KIỂM TRA KHI CHUYỂN TỪ TRANG ĐĂNG KÝ ---
+            const storedData = sessionStorage.getItem('lookupData');
+            if (storedData) {
+                try {
+                    const lookupData = JSON.parse(storedData);
+                    displayCardData(lookupData); // Gọi hàm hiển thị chung
+                    sessionStorage.removeItem('lookupData');
+                } catch (e) {
+                    console.error("Lỗi xử lý dữ liệu tra cứu:", e);
+                    sessionStorage.removeItem('lookupData');
+                }
+            }
+
+            function handlePersonalInfoLookup() {
+                const fullName = $('#name').val().trim();
+                const dobValue = $('#birthday').val().trim();
+                const phone = $('#phone-number').val().trim();
+                const captchaInput = $('#captcha-input').val().trim();
+
+                if (captchaInput.toUpperCase() !== currentCatchaCode.toUpperCase()) {
+                    alert("Mã xác thực không chính xác!");
+                    generateCaptcha();
+                    return;
+                }
+
+                if (!fullName || !dobValue || !phone) {
+                    alert("Vui lòng điền đầy đủ Họ tên, Ngày sinh và Điện thoại.");
+                    return;
+                }
+
+                const dataToSend = {
+                    FullName: fullName,
+                    Dob: dobValue,
+                    Tel: phone
+                };
+
+                $.ajax({
+                    url: "http://localhost:5070/api/Lookup/ByPersonalInfo",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataToSend),
+                    success: function(response) {
+                        displayCardData(response);
+                    },
+                    error: function(xhr) {
+                        const errorResponse = xhr.responseJSON;
+                        alert(errorResponse ? errorResponse.message : "Đã xảy ra lỗi khi tra cứu.");
+                        generateCaptcha();
+                    }
+                });
+            }
+
+            // --- HÀM XỬ LÝ TRA CỨU THỦ CÔNG ---
+            function handleManualLookup() {
+                const regCode = $('#reg-code').val().trim();
+                const captchaInput = $('#captcha-input').val().trim();
+
+                // Kiểm tra captcha trước
+                if (captchaInput.toUpperCase() !== currentCatchaCode.toUpperCase()) {
+                    alert("Mã xác thực không chính xác!");
+                    generateCaptcha();
+                    return;
+                }
+
+                // Kiểm tra xem đã nhập mã đăng ký chưa
+                if (!regCode) {
+                    alert("Vui lòng nhập mã đăng ký.");
+                    return;
+                }
+
+                // Gọi API tra cứu
+                $.ajax({
+                    url: "http://localhost:5070/api/Lookup/ByRegCode/" + regCode,
+                    type: "GET",
+                    success: function(response) {
+                        // response chính là dữ liệu thẻ từ database
+                        displayCardData(response);
+                    },
+                    error: function(xhr) {
+                        const errorResponse = xhr.responseJSON;
+                        alert(errorResponse ? errorResponse.message : "Đã xảy ra lỗi khi tra cứu.");
+                        generateCaptcha();
+                    }
+                });
+            }
+
+            function resetForm() {
+                // 1. Xóa nội dung trong các ô input của form
+                $('.lookup-form').find('input[type="text"], input[type="date"], input[type="number"]').val('');
+
+                // 2. Ẩn khu vực kết quả tra cứu
+                $('#lookup-results').hide();
+
+                // 3. Hiện lại form tra cứu
+                $('.lookup-form').show();
+
+                // 4. Đưa tab về trạng thái mặc định (Theo thông tin cá nhân)
+                $('.personal-info-field').css('display', 'flex');
+                $('.reg-code-field').css('display', 'none');
+                $('#tab-personal-info li').addClass('active');
+                $('#tab-reg-code li').removeClass('active');
+
+                // 5. Tạo lại mã captcha mới
+                generateCaptcha();
+            }
+
+            // --- PHẦN XỬ LÝ CAPTCHA ---
+            let currentCatchaCode = '';
+
+            function generateCaptcha() {
+                const canvas = document.getElementById("captcha");
+                if (!canvas) return;
+                const ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                let captchaCode = "";
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.textBaseline = "middle";
+                ctx.textAlign = "center";
+                for (let i = 0; i < 4; i++) {
+                    let char = chars.charAt(Math.floor(Math.random() * chars.length));
+                    captchaCode += char;
+                    let fontSize = Math.floor(Math.random() * 10) + 28;
+                    ctx.font = `bold ${fontSize}px 'Inter', sans-serif`;
+                    ctx.fillStyle = `rgb(${Math.floor(Math.random() * 150)},${Math.floor(Math.random() * 150)},${Math.floor(Math.random() * 150)})`;
+                    let x = 35 + i * 50;
+                    let y = canvas.height / 2 + (Math.random() * 20 - 10);
+                    let angle = (Math.random() * 30 - 15) * (Math.PI / 180);
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(angle);
+                    ctx.fillText(char, 0, 0);
+                    ctx.restore();
+                }
+                currentCatchaCode = captchaCode;
+            // --- THÊM NHIỄU (ĐƯỜNG THẲNG NGẪU NHIÊN) ---
+            for (let i = 0; i < 5; i++) {
+                ctx.strokeStyle = "#ccc";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height
+                );
+                ctx.lineTo(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height
+                );
+                ctx.stroke();
+            }
+            // --- THÊM NHIỄU (ĐIỂM NGẪU NHIÊN) ---
+            for (let i = 0; i < 30; i++) {
+                ctx.fillStyle = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.3)`;
+                ctx.beginPath();
+                ctx.arc(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    1, // Bán kính của điểm
+                    0,
+                    2 * Math.PI
+                );
+                ctx.fill();
+            }
+            }
+
+            generateCaptcha();
+
+            //CHUYỂN TAB
+            const tabPersonalInfo = document.getElementById('tab-personal-info');
+            const tabRegCode = document.getElementById('tab-reg-code');
+
+            const personalInfoFields = document.querySelectorAll('.personal-info-field');
+            const regCodeField = document.querySelector('.reg-code-field');
+
+            tabPersonalInfo.addEventListener('click', function(e) {
+                e.preventDefault(); // Ngăn trình duyệt nhảy trang
+                resetForm()
+                // Hiển thị các trường thông tin cá nhân
+                personalInfoFields.forEach(field => field.style.display = 'flex');
+                // Ẩn trường mã đăng ký
+                regCodeField.style.display = 'none';
+
+                // Cập nhật trạng thái active cho tab
+                tabPersonalInfo.querySelector('li').classList.add('active');
+                tabRegCode.querySelector('li').classList.remove('active');
+
+                
+            });
+
+            tabRegCode.addEventListener('click', function(e) {
+                e.preventDefault();
+                resetForm()
+                // Ẩn các trường thông tin cá nhân
+                personalInfoFields.forEach(field => field.style.display = 'none');
+                // Hiển thị trường mã đăng ký
+                regCodeField.style.display = 'flex';
+
+                // Cập nhật trạng thái active cho tab
+                tabRegCode.querySelector('li').classList.add('active');
+                tabPersonalInfo.querySelector('li').classList.remove('active');
+
+                
+            });
+
+            // --- GẮN SỰ KIỆN ---
+            $('.submit-btn').on('click', function(e) {
+                e.preventDefault();
+                // Kiểm tra xem tab nào đang active để quyết định hành động
+                if ($('#tab-reg-code li').hasClass('active')) {
+                    handleManualLookup();
+                } else {
+                    // Thêm logic cho tra cứu theo thông tin cá nhân 
+                    handlePersonalInfoLookup();
+                }
+            generateCaptcha();
+            });
+        });
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    @* <script src="~/js/tracuu.js"></script> *@
