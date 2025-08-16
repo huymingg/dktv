@@ -43,6 +43,54 @@ namespace home.Controllers
             return View("Views/Home/gop_y.cshtml");
         }
 
+        [Route("TrangChu")]
+        public IActionResult TrangChu()
+        {
+            return View("Areas/Admin/Views/TrangChu.cshtml");
+        }
+
+        [Route("login")]
+        public IActionResult login()
+        {
+            return View("Areas/Admin/Views/Login.cshtml");
+        }
+
+        [Route("register")]
+        public IActionResult register()
+        {
+            return View("Areas/Admin/Views/Register.cshtml");
+        }
+
+        [Route("forgot-password")]
+        public IActionResult forgot_password()
+        {
+            return View("Areas/Admin/Views/Forgot-password.cshtml");
+        }
+
+        [Route("404")]
+        public IActionResult NotFound()
+        {
+            return View("Areas/Admin/Views/404.cshtml");
+        }
+
+        [Route("DuyetDangKy")]
+        public IActionResult DuyetDangKy()
+        {
+            return View("Areas/Admin/Views/DuyetDangKy.cshtml");
+        }
+
+        [Route("TraCuu-BaoCao")]
+        public IActionResult TraCuuBaoCao()
+        {
+            return View("Areas/Admin/Views/TraCuu-BaoCao.cshtml");
+        }
+
+        [Route("QuanLyGopY")]
+        public IActionResult QuanLyGopY()
+        {
+            return View("Areas/Admin/Views/QuanLyGopY.cshtml");
+        }
+
         public IActionResult Privacy()
         {
             return View();
