@@ -1,12 +1,23 @@
+using System.Diagnostics;
+using home.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace FrontEnd.Areas.Admin.Views
+namespace TraCuuBaoCao.Controllers
 {
-    public class TraCuu_BaoCaoModel : PageModel
+    public class TraCuuBaoCaoController : Controller
     {
-        public void OnGet()
+        private readonly ILogger<TraCuuBaoCaoController> _logger;
+
+        public TraCuuBaoCaoController(ILogger<TraCuuBaoCaoController> logger)
         {
+            _logger = logger;
+        }
+
+        [Route("TraCuuBaoCao")]
+        public IActionResult DuyetDangKy()
+        {
+            return View("Areas/Admin/Views/TraCuu-BaoCao.cshtml");
         }
     }
 }

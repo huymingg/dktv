@@ -79,7 +79,7 @@ namespace home.Controllers
             return View("Areas/Admin/Views/DuyetDangKy.cshtml");
         }
 
-        [Route("TraCuu-BaoCao")]
+        [Route("TraCuuBaoCao")]
         public IActionResult TraCuuBaoCao()
         {
             return View("Areas/Admin/Views/TraCuu-BaoCao.cshtml");

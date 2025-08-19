@@ -1,12 +1,23 @@
+using System.Diagnostics;
+using home.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace FrontEnd.Areas.Admin.Views
+namespace QuanLyGopY.Controllers
 {
-    public class QuanLyGopYModel : PageModel
+    public class QuanLyGopYController : Controller
     {
-        public void OnGet()
+        private readonly ILogger<QuanLyGopYController> _logger;
+
+        public QuanLyGopYController(ILogger<QuanLyGopYController> logger)
         {
+            _logger = logger;
+        }
+
+        [Route("QuanLyGopY")]
+        public IActionResult DuyetDangKy()
+        {
+            return View("Areas/Admin/Views/QuanLyGopY.cshtml");
         }
     }
 }

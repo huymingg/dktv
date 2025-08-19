@@ -1,12 +1,23 @@
+using System.Diagnostics;
+using home.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace FrontEnd.Areas.Admin.Views
+namespace DuyetDangKy.Controllers
 {
-    public class DuyetDangKyModel : PageModel
+    public class DuyetDangKyController : Controller
     {
-        public void OnGet()
+        private readonly ILogger<DuyetDangKyController> _logger;
+
+        public DuyetDangKyController(ILogger<DuyetDangKyController> logger)
         {
+            _logger = logger;
+        }
+
+        [Route("DuyetDangKy")]
+        public IActionResult DuyetDangKy()
+        {
+            return View("Areas/Admin/Views/DuyetDangKy.cshtml");
         }
     }
 }
