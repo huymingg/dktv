@@ -18,6 +18,15 @@
 
     <!-- Custom styles for this template-->
     <link href="~/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/Admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        /* Làm cho placeholder của ô text trông giống ô date */
+        input[type="text"].form-control::placeholder {
+            color: #858796; /* Màu của placeholder */
+            opacity: 1;
+        }
+    </style>
 
 </head>
 
@@ -269,7 +278,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                        <img class="rounded-circle" src="~/Admin/img/undraw_profile_1.svg"
                                              alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -283,7 +292,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src="~/Admin/img/undraw_profile_2.svg"
                                              alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -297,7 +306,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle" src="~/Admin/img/undraw_profile_3.svg"
                                              alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -335,7 +344,7 @@
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                     src="img/undraw_profile.svg">
+                                     src="~/Admin/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -365,13 +374,76 @@
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div id="content-wrapper" class="d-flex flex-column">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                    <!-- Main Content -->
+                    <div id="content">
 
-                </div>
-                <!-- /.container-fluid -->
+                        
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-2 text-gray-800">Quản lý góp ý</h1>
+
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Danh sách góp ý</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Filter Form -->
+                                    <form class="form-inline mb-4">
+                                        <div class="form-group mr-3">
+                                            <input type="text" class="form-control" placeholder="Từ khoá">
+                                        </div>
+                                        <div class="form-group mr-3">
+                                            <select class="form-control select-center-selected" id="trangThai">
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group mr-3">
+                                            <input type="text" class="form-control" placeholder="Ngày tạo từ" id="dateFrom">
+                                        </div>
+                                        <div class="form-group mr-3">
+                                            <input type="text" class="form-control" placeholder="Đến" id="dateTo">
+                                        </div>
+                                        <button type="submit" class="btn btn-warning btn-circle mr-2">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary btn-circle">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </form>
+
+                                    <!-- Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Họ tên người gửi</th>
+                                                    <th>Ngày tạo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Dữ liệu mẫu -->
+                                                <tr>
+                                                    <td>Chuyển địa chỉ nhận về Thư viện Hải Phú</td>
+                                                    <td>Nguyễn Ngọc Cương</td>
+                                                    <td>05-05-2025</td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.container-fluid -->
+
+                    </div>
 
             </div>
             <!-- End of Main Content -->
@@ -424,6 +496,62 @@
 
     <!-- Custom scripts for all pages-->
     <script src="~/Admin/js/sb-admin-2.min.js"></script>
+    <script src="~/Admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        // Hàm gọi API để lấy danh sách trạng thái
+        function GetStatus() {
+            $.ajax({
+                url: "http://localhost:5070/api/TrangThai/get-status",
+                type: "GET",
+                success: function(response) {
+                    let select = $("#trangThai");
+                    // Xóa các lựa chọn cũ và thêm lựa chọn mặc định
+                    select.empty().append('<option value="" selected>--Trạng thái--</option>');
+
+                    if (Array.isArray(response)) {
+                        response.forEach(item => {
+                            // Thêm từng trạng thái từ DB vào dropdown
+                            select.append($('<option></option>').val(item.id).text(item.name));
+                        });
+                    }
+                },
+                error: function() {
+                    console.error("Không thể tải trạng thái");
+                }
+            });
+        }
+
+        // Xử lý cho ô "Ngày tạo từ"
+        $('#dateFrom').on('focus', function() {
+            // Khi người dùng bấm vào, đổi thành type="date" để hiện lịch
+            this.type = 'date';
+        }).on('blur', function() {
+            // Khi người dùng rời đi, nếu không chọn ngày nào thì đổi lại thành text
+            if (!this.value) {
+                this.type = 'text';
+            }
+        });
+
+        // Xử lý tương tự cho ô "Đến"
+        $('#dateTo').on('focus', function() {
+            this.type = 'date';
+        }).on('blur', function() {
+            if (!this.value) {
+                this.type = 'text';
+            }
+        });
+
+        // Hàm này sẽ chạy sau khi trang đã tải xong
+        $(document).ready(function () {
+            // Kích hoạt chức năng cho bảng dữ liệu
+            $('#dataTable').DataTable();
+
+            // Gọi hàm để đổ dữ liệu vào dropdown trạng thái
+            GetStatus();
+        });
+    </script>
 
 </body>
 
