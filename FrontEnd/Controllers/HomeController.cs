@@ -73,33 +73,37 @@ namespace home.Controllers
             return View("Areas/Admin/Views/404.cshtml");
         }
 
-        [Route("DuyetDangKy")]
-        public IActionResult DuyetDangKy()
+        // DuyetDangKyController.cs
+        [Route("[controller]/[action]")]
+        public class DuyetDangKyController : Controller
         {
-            return View("Areas/Admin/Views/DuyetDangKy.cshtml");
+            public IActionResult Index() => View();
+            // => tìm file /Areas/Admin/Views/DuyetDangKy/Index.cshtml
         }
 
-        [Route("TraCuu-BaoCao")]
-        public IActionResult TraCuuBaoCao()
+        [Route("[controller]/[action]")]
+        public class TraCuuBaoCaoController : Controller
         {
-            return View("Areas/Admin/Views/TraCuu-BaoCao.cshtml");
+            public IActionResult Index() => View();
+            // => tìm file /Areas/Admin/Views/TraCuuBaoCao/Index.cshtml
         }
 
-        [Route("QuanLyGopY")]
-        public IActionResult QuanLyGopY()
+        [Route("[controller]/[action]")]
+        public class QuanLyGopYController : Controller
         {
-            return View("Areas/Admin/Views/QuanLyGopY.cshtml");
+            public IActionResult Index() => View();
+            // => tìm file /Areas/Admin/Views/QuanLyGopY/Index.cshtml
         }
 
+        [Route("Activity")]
+        public IActionResult Activity()
+        {
+            return View("Areas/Admin/Views/Activity.cshtml");
+        }
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

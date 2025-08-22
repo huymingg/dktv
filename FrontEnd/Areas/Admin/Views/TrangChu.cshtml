@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Trang Chủ</title>
 
     <!-- Custom fonts for this template-->
     <link href="~/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">UCVN ADMIN</div>
+                <div class="sidebar-brand-text mx-3">Trang Chủ</div>
             </a>
 
             <!-- Divider -->
@@ -44,7 +44,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="TrangChu">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                    <span>Overview</span>
                 </a>
             </li>
 
@@ -53,7 +53,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Tổng quan
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -61,42 +61,22 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Đăng ký thẻ thư viện</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="404">Buttons</a>
-                        <a class="collapse-item" href="404">Cards</a>
+                        <a class="collapse-item" href="DuyetDangKy">Duyệt đăng ký</a>
+                        <a class="collapse-item" href="TraCuuBaoCao">Tra cứu - báo cáo</a>
+                        <a class="collapse-item" href="QuanLyGopY">Quản lý góp ý</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                   aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="404">Colors</a>
-                        <a class="collapse-item" href="404">Borders</a>
-                        <a class="collapse-item" href="404">Animations</a>
-                        <a class="collapse-item" href="404">Other</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Quản trị hệ thống
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -104,19 +84,29 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Menu</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login">Login</a>
-                        <a class="collapse-item" href="register">Register</a>
-                        <a class="collapse-item" href="forgot-password">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="DuyetDangKy">Duyệt đăng ký</a>
-                        <a class="collapse-item" href="TraCuu-BaoCao">Tra cúu - Báo cáo</a>
-                        <a class="collapse-item" href="QuanLyGopY">Quản lý góp ý</a>
+                        <h6 class="collapse-header">Hệ thống phần mềm</h6>
+                        <a class="collapse-item" href="login">Cấu hình Publish</a>
+                        <a class="collapse-item" href="register">Route</a>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Quản lý truy cập & phân quyền</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Hệ thống phần mềm</h6>
+                        <a class="collapse-item" href="forgot-password">Người dùng</a>
+                        <a class="collapse-item" href="DuyetDangKy">Tính năng</a>
+                        <a class="collapse-item" href="TraCuu-BaoCao">Vai trò</a>
                     </div>
                 </div>
             </li>
@@ -196,7 +186,7 @@
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
                                         <input type="text" class="form-control bg-light border-0 small"
-                                               placeholder="Search for..." aria-label="Search"
+                                               placeholder="Tìm kiếm" aria-label="Search"
                                                aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
@@ -220,7 +210,7 @@
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    Thông báo gần đây
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
@@ -230,7 +220,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <span class="font-weight-bold">Thẻ ... đang chờ duyệt</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -241,7 +231,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        Duyệt góp ý của người dùng.
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -252,10 +242,10 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Phản hồi từ người dùng về việc sử dụng thẻ thư viện.
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Xem tất cả thông báo</a>
                             </div>
                         </li>
 
@@ -271,7 +261,7 @@
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
-                                    Message Center
+                                    Tin nhắn đang chờ 
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
@@ -329,7 +319,7 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Xem thêm</a>
                             </div>
                         </li>
 
@@ -339,29 +329,29 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> ADMIN </span>
                                 <img class="img-profile rounded-circle"
                                      src="~/Admin/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="Profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Hồ sơ cá nhân
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="Setting">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Cài đặt
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="Activity">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Hoạt động đăng nhập
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="Logout" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Đăng xuất
                                 </a>
                             </div>
                         </li>
@@ -375,9 +365,9 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Quản lý đăng ký thẻ</h1>
                         <a href="404" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                            <i class="fas fa-download fa-sm text-white-50"></i> Tạo báo cáo
                         </a>
                     </div>
 
@@ -389,14 +379,21 @@
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
+                                        
+                        
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+
                                                 Số thẻ chờ duyệt
+
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                                            
                                         </div>
                                         <div class="col-auto">
+
                                             <i class="fas fa-clock fa-2x text-gray-300"></i>
+
                                         </div>
                                     </div>
                                 </div>
@@ -410,12 +407,16 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+
                                                 Số thẻ đã cấp/Từ chối/Tổng số đăng ký
+
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">36</div>
                                         </div>
                                         <div class="col-auto">
+
                                             <i class="fas fa-id-card fa-2x text-gray-300"></i>
+
                                         </div>
                                     </div>
                                 </div>
@@ -429,23 +430,20 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+
                                                 Tổng số tiền thu trong tháng 
+
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                             aria-valuemax="100"></div>
-                                                    </div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">386$</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
+
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+
                                         </div>
                                     </div>
                                 </div>
@@ -459,7 +457,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+
                                                 Số góp ý chưa duyệt trong tháng
+
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
@@ -481,7 +481,9 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
                                     <h6 class="m-0 font-weight-bold text-primary">Đơn đăng ký theo tháng</h6>
+
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -489,11 +491,11 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                              aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-header">Theo dõi lợi nhuận</div>
+                                            <a class="dropdown-item" href="#">Lợi nhuận theo tháng</a>
+                                            <a class="dropdown-item" href="#">Lợi nhuận 1 quý </a>
+                                            <a class="dropdown-item" href="#">Lợi nhuận 1 năm ròng</a>
+                                            <a class="dropdown-item" href="#">Vốn hóa </a>
                                         </div>
                                     </div>
                                 </div>
@@ -511,7 +513,9 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
                                     <h6 class="m-0 font-weight-bold text-primary">Số lượng mỗi loại thẻ đăng ký theo tháng</h6>
+
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -534,6 +538,7 @@
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
+
                                             <i class="fas fa-circle text-primary"></i> Người lớn
                                         </span>
                                         <span class="mr-2">
@@ -541,6 +546,7 @@
                                         </span>
                                         <span class="mr-2">
                                             <i class="fas fa-circle text-info"></i> Doanh nghiệp 
+
                                         </span>
                                     </div>
                                 </div>
@@ -557,39 +563,39 @@
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Quản lý đăng ký thẻ</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">
-                                        Server Migration <span class="float-right">20%</span>
+                                        Số góp ý chưa duyệt <span class="float-right">18</span>
                                     </h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 18%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">
-                                        Sales Tracking <span class="float-right">40%</span>
+                                        Số lượng báo cáo cần xử lí <span class="float-right">23</span>
                                     </h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 23%"
                                              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">
-                                        Customer Database <span class="float-right">60%</span>
+                                        Số thẻ chưa duyệt cho bạn đọc <span class="float-right">36</span>
                                     </h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                                        <div class="progress-bar" role="progressbar" style="width: 36%"
                                              aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">
-                                        Payout Details <span class="float-right">80%</span>
+                                        Thẻ đã từ chối <span class="float-right">60</span>
                                     </h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 60%"
                                              aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">
-                                        Account Setup <span class="float-right">Complete!</span>
+                                        Số thẻ đã cấp cho bạn đọc <span class="float-right">Trạng thái: Hoàn tất</span>
                                     </h4>
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
