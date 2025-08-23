@@ -14,7 +14,7 @@ namespace TraCuuBaoCao.Controllers
             _logger = logger;
         }
 
-        [Route("TraCuuBaoCao")]
+        [Route("TraCuu-BaoCao")]
         public IActionResult DuyetDangKy()
         {
             return View("Areas/Admin/Views/TraCuu-BaoCao.cshtml");
