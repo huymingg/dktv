@@ -126,7 +126,7 @@
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="DuyetDangKy">Duyệt đăng ký</a>
                         <a class="collapse-item" href="TraCuu-BaoCao">Tra cúu - Báo cáo</a>
-                        <a class="collapse-item" href="QuanLyGopY">Quản lý góp ý</a>
+                        <a class="collapse-item active" href="QuanLyGopY">Quản lý góp ý</a>
                     </div>
                 </div>
             </li>
@@ -427,11 +427,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+
                                                 <!-- Dữ liệu mẫu -->
                                                 <tr>
-                                                    <td>Chuyển địa chỉ nhận về Thư viện Hải Phú</td>
-                                                    <td>Nguyễn Ngọc Cương</td>
-                                                    <td>05-05-2025</td>
+
                                                 </tr>
                                                 
                                             </tbody>
@@ -487,6 +486,38 @@
         </div>
     </div>
 
+    <!-- Chi tiet phan hoi Modal-->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel"
+            aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Chi tiết phản hồi</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="modalTitle" class="text-primary font-weight-bold"></h4>
+                    <div class="d-flex justify-content-between text-muted mb-3">
+                        <span>
+                            <strong id="modalFullName"></strong> - <em id="modalEmail"></em>
+                        </span>
+                        <span>
+                            Trạng thái: <strong id="modalStatus"></strong> | <i class="far fa-calendar-alt"></i> <span id="modalDate"></span>
+                        </span>
+                    </div>
+                    <hr>
+                    <p id="modalContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
+                    <button class="btn btn-success" type="button" id="approve-button">Duyệt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/Admin/vendor/jquery/jquery.min.js"></script>
     <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -503,53 +534,121 @@
         // Hàm gọi API để lấy danh sách trạng thái
         function GetStatus() {
             $.ajax({
-                url: "http://localhost:5070/api/TrangThai/get-status",
+                url: "http://localhost:5070/api/QuanLyGopY/get-feedback-statuses", // URL của API mới
                 type: "GET",
                 success: function(response) {
                     let select = $("#trangThai");
-                    // Xóa các lựa chọn cũ và thêm lựa chọn mặc định
                     select.empty().append('<option value="" selected>--Trạng thái--</option>');
 
+                    // Dữ liệu trả về là một mảng chuỗi đơn giản
                     if (Array.isArray(response)) {
-                        response.forEach(item => {
-                            // Thêm từng trạng thái từ DB vào dropdown
-                            select.append($('<option></option>').val(item.id).text(item.name));
+                        response.forEach(statusText => {
+                            // Gán cả value và text là tên trạng thái
+                            select.append($('<option></option>').val(statusText).text(statusText));
                         });
                     }
                 },
                 error: function() {
-                    console.error("Không thể tải trạng thái");
+                    console.error("Không thể tải trạng thái góp ý");
                 }
             });
         }
 
-        // Xử lý cho ô "Ngày tạo từ"
-        $('#dateFrom').on('focus', function() {
-            // Khi người dùng bấm vào, đổi thành type="date" để hiện lịch
-            this.type = 'date';
-        }).on('blur', function() {
-            // Khi người dùng rời đi, nếu không chọn ngày nào thì đổi lại thành text
-            if (!this.value) {
-                this.type = 'text';
-            }
-        });
-
-        // Xử lý tương tự cho ô "Đến"
-        $('#dateTo').on('focus', function() {
-            this.type = 'date';
-        }).on('blur', function() {
-            if (!this.value) {
-                this.type = 'text';
-            }
-        });
+        // Hàm định dạng ngày tháng
+        function formatDate(data) {
+            if (!data) return "";
+            var date = new Date(data);
+            var day = ("0" + date.getDate()).slice(-2);
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var year = date.getFullYear();
+            return day + '-' + month + '-' + year;
+        }
 
         // Hàm này sẽ chạy sau khi trang đã tải xong
         $(document).ready(function () {
-            // Kích hoạt chức năng cho bảng dữ liệu
-            $('#dataTable').DataTable();
+
+                // Khai báo một biến để lưu ID của góp ý đang được chọn
+            let selectedFeedbackId = null;
+
+            // Khởi tạo DataTable và lưu vào một biến
+            var table = $('#dataTable').DataTable({
+                "processing": true,
+                "ajax": {
+                    "url": "http://localhost:5070/api/QuanLyGopY/get-all-feedback",
+                    "type": "GET",
+                    "dataType": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {
+                        "data": "title",
+                        "render": function (data, type, row) {
+                            return `<a href="#" class="feedback-link" data-id="${row.id}">${data}</a>`;
+                        }
+                    },
+                    { "data": "fullName" },
+                    {
+                        "data": "createdDate",
+                        "render": formatDate
+                    }
+                ]
+            });
+
+            // Gắn sự kiện click để MỞ MODAL
+            $('#dataTable tbody').on('click', 'a.feedback-link', function (e) {
+                e.preventDefault();
+                var feedbackId = $(this).data('id');
+
+                // Lưu ID vào biến toàn cục
+                selectedFeedbackId = feedbackId;
+
+                $.ajax({
+                    url: `http://localhost:5070/api/QuanLyGopY/get-feedback-detail/${feedbackId}`,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#modalTitle').text(response.title);
+                        $('#modalFullName').text(response.fullName);
+                        $('#modalEmail').text(response.email);
+                        $('#modalStatus').text(response.status);
+                        $('#modalDate').text(formatDate(response.createdDate));
+                        $('#modalContent').text(response.content);
+                        $('#feedbackModal').modal('show');
+                    },
+                    error: function() {
+                        alert('Không thể tải chi tiết góp ý.');
+                    }
+                });
+            });
+
+            // Gắn sự kiện click cho nút DUYỆT
+            $('#approve-button').on('click', function() {
+                // Sử dụng biến toàn cục đã lưu
+                if (!selectedFeedbackId) {
+                    alert('Không tìm thấy ID của góp ý.');
+                    return;
+                }
+
+                $.ajax({
+                    url: `http://localhost:5070/api/QuanLyGopY/approve-feedback/${selectedFeedbackId}`,
+                    type: 'PUT',
+                    success: function(response) {
+                        alert(response.message);
+                        $('#feedbackModal').modal('hide');
+                        table.ajax.reload(); // Tải lại bảng
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra, không thể duyệt góp ý.');
+                    }
+                });
+            });
+
 
             // Gọi hàm để đổ dữ liệu vào dropdown trạng thái
             GetStatus();
+
+            // Xử lý cho ô chọn ngày (giữ nguyên)
+            $('#dateFrom').on('focus', function() { this.type = 'date'; }).on('blur', function() { if (!this.value) { this.type = 'text'; } });
+            $('#dateTo').on('focus', function() { this.type = 'date'; }).on('blur', function() { if (!this.value) { this.type = 'text'; } });
         });
     </script>
 

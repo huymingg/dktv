@@ -42,7 +42,7 @@
                         <label for="captcha">Mã xác thực <span style="color: red;">(*)</span></label>
                         <div class="captcha-block">
                             <canvas id="captcha" width="240" height="80"></canvas>
-                            <input type="text" id="captcha" placeholder="Nhập mã xác thực bên trên" required>
+                            <input type="text" id="captcha-input" placeholder="Nhập mã xác thực bên trên" required>
                         </div>
                     </div>
                     <div class="form-row form-row-btn">
@@ -129,7 +129,7 @@
             { selector: '#phone',   rule: validators.phone,    message: 'Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng 0).' },
             { selector: '#subject', rule: validators.required, message: 'Vui lòng nhập tiêu đề.' },
             { selector: '#content', rule: validators.required, message: 'Vui lòng nhập nội dung góp ý.' },
-            { selector: '#captcha', rule: validators.captcha,  message: 'Vui lòng nhập đúng mã xác thực.' }
+            { selector: '#captcha-input', rule: validators.captcha,  message: 'Vui lòng nhập đúng mã xác thực.' }
         ];
 
         // --- HÀM KIỂM TRA TOÀN BỘ FORM (VIẾT LẠI) ---
