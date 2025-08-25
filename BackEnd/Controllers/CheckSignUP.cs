@@ -1,5 +1,6 @@
-﻿using apithethuvien.Controllers;
+using apithethuvien.Controllers;
 using apithethuvien.Dto;
+using BackEnd.Dto;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
@@ -10,11 +11,11 @@ namespace apithethuvien.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuanLyGopYController : ControllerBase
+    public class DuyetDangKyController : ControllerBase
     {
-        
-        [HttpGet("get-all-feedback")]
-        public virtual async Task<List<CardFeedbackModel>> GetAllFeedback()
+
+        [HttpGet("get-sign-up")]
+        public virtual async Task<List<GetRegistration>> GetRegistations()
         {
             var connection = new Connection();
             if (!connection.OpenConnection())
@@ -24,24 +25,16 @@ namespace apithethuvien.Controllers
 
             try
             {
-                var sql = "SELECT id, title, fullname, createddate FROM car_feedback ORDER BY createddate DESC";
-                var cmd = new NpgsqlCommand(sql, connection.GetConnection());
-                var reader = await cmd.ExecuteReaderAsync();
+                var sql = @"
+                    SELECT id, registrationcode, fullname, cardtype, cccd, createddate, status 
+                    FROM car_register
+                    ORDER BY createddate DESC";
 
-                var feedbackList = new List<CardFeedbackModel>();
-                while (await reader.ReadAsync())
+                using (var conn = connection.GetConnection())
                 {
-                    var feedback = new CardFeedbackModel
-                    {
-                        Id = reader.GetString(reader.GetOrdinal("id")),
-                        Title = reader.GetString(reader.GetOrdinal("title")),
-                        FullName = reader.GetString(reader.GetOrdinal("fullname")),
-                        CreatedDate = reader.GetDateTime(reader.GetOrdinal("createddate"))
-                    };
-                    feedbackList.Add(feedback);
+                    var feedbackList = await conn.QueryAsync<GetRegistration>(sql);
+                    return feedbackList.ToList();
                 }
-                await reader.CloseAsync();
-                return feedbackList;
             }
             catch (System.Exception ex)
             {
@@ -53,8 +46,9 @@ namespace apithethuvien.Controllers
             }
         }
 
-        
-        [HttpGet("get-feedback-detail/{id}")]
+
+
+        [HttpGet("get-sign-details/{id}")]
         public virtual async Task<IActionResult> GetFeedbackDetail(string id)
         {
             var connection = new Connection();
@@ -73,23 +67,23 @@ namespace apithethuvien.Controllers
 
                 if (await reader.ReadAsync())
                 {
-                    var feedbackDetail = new CardFeedbackModel
+                    var feedbackDetail = new GetRegistration
                     {
-                        Id = reader.GetString(reader.GetOrdinal("id")),
-                        Title = reader.GetString(reader.GetOrdinal("title")),
-                        FullName = reader.GetString(reader.GetOrdinal("fullname")),
-                        Email = reader.IsDBNull(reader.GetOrdinal("email")) ? "" : reader.GetString(reader.GetOrdinal("email")),
-                        Content = reader.GetString(reader.GetOrdinal("content")),
-                        Status = reader.GetString(reader.GetOrdinal("status")),
-                        CreatedDate = reader.GetDateTime(reader.GetOrdinal("createddate"))
+                        id = reader.GetString(reader.GetOrdinal("id")),
+                        fullName = reader.GetString(reader.GetOrdinal("fullname")),
+                        status = reader.GetString(reader.GetOrdinal("status")),
+                        createddate = reader.GetDateTime(reader.GetOrdinal("createddate")),
+                        registrationcode = reader.GetString(reader.GetOrdinal("registrationcode")),
+                        cardtype = reader.GetString(reader.GetOrdinal("cardtype"))
                     };
                     await reader.CloseAsync();
                     return Ok(feedbackDetail);
+
                 }
                 else
                 {
                     await reader.CloseAsync();
-                    return NotFound("Không tìm thấy góp ý.");
+                    return NotFound("Không tìm thấy thẻ.");
                 }
             }
             catch (System.Exception ex)
@@ -102,7 +96,7 @@ namespace apithethuvien.Controllers
             }
         }
 
-        [HttpPut("approve-feedback/{id}")]
+        [HttpPut("approve-sign/{id}")]
         public virtual async Task<IActionResult> ApproveFeedback(string id)
         {
             // Sử dụng chuỗi kết nối trực tiếp và Dapper cho an toàn và ngắn gọn
@@ -129,7 +123,7 @@ namespace apithethuvien.Controllers
                 return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
-        [HttpGet("get-feedback-statuses")]
+        [HttpGet("get-sign-statuses")]
         public virtual async Task<IActionResult> GetFeedbackStatuses()
         {
             var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=123;Database=OCRP";

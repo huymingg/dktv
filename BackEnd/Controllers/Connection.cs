@@ -9,7 +9,7 @@ namespace apithethuvien.Controllers
 
         public Connection()
         {
-            _connectionString = $"Host=localhost;Port=5432;Username=postgres;Password=huy2712004vp;Database=OCRP";
+            _connectionString = $"Host=localhost;Port=5432;Username=postgres;Password=123;Database=OCRP";
             _connection = new NpgsqlConnection(_connectionString);
         }
 

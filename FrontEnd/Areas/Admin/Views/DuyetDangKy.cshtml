@@ -412,85 +412,18 @@
                                                     cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>Tiêu đề</th>
-                                                            <th>Họ tên người gửi</th>
-                                                            <th>Ngày tạo</th>
+                                                            <th>Mã đăng ký</th>
+                                                            <th>Tên bạn đọc</th>
+                                                            <th>Loại thẻ </th>
+                                                            <th>CMND/CCCD</th>
+                                                            <th>Ngày đăng ký</th>
+                                                            <th>Trạng thái</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <!-- Dữ liệu mẫu -->
-                                                        <tr>
-                                                            <td>Chuyển địa chỉ nhận về Thư viện Hải Phú</td>
-                                                            <td>Nguyễn Ngọc Cương</td>
-                                                            <td>05-05-2025</td>
-                                                        
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Trần Văn </td>
-                                                            <td>09-05-2025</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Đổi địa chỉ nhận thẻ</td>
-                                                            <td>Nguyễn Thị B</td>
-                                                            <td>10-05-2025</td></tr>
-                                                            <tr>
-                                                            <td>Yêu cầu hỗ trợ kỹ thuật</td>
-                                                            <td>Phạm Van C</td> 
-                                                            <td>11-05-2025</td>
-                                                            </tr>
-                                                            <tr>
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn a</td>   
-                                                            <td>12-05-2025</td>
-                                                            </tr>
-                                                            <tr>
-                                                            <td>Đăng ký thẻ thư viện</td>   
-                                                            <td>Nguyễn Văn B</td>
-                                                            <td>13-05-2025</td> 
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn C</td>
-                                                            <td>14-05-2025</td> 
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn D</td>
-                                                            <td>15-05-2025</td> 
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn E</td>
-                                                            <td>16-05-2025</td>
-                                                        </tr>               
 
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn F</td>
-                                                            <td>17-05-2025</td> 
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn G</td>
-                                                            <td>18-05-2025</td>     
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn H</td>
-                                                            <td>19-05-2025</td>
-                                                        </tr>
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn I</td>
-                                                            <td>20-05-2025</td>
-                                                        </tr>                   
 
-                                                        <tr>    
-                                                            <td>Đăng ký thẻ thư viện</td>
-                                                            <td>Nguyễn Văn J</td>
-                                                            <td>21-05-2025</td> 
-                                                        </tr>   
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -547,26 +480,198 @@
                 </div>
             </div>
 
-            <!-- jQuery -->
-            <script src="~/Admin/vendor/jquery/jquery.min.js"></script>
 
-            <!-- Bootstrap core JavaScript -->
-            <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- jQuery Easing -->
-            <script src="~/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- DataTables -->
-            <script src="~/Admin/vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="~/Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-            <Script>
-                $(document).ready(function () {
-                    // Kích hoạt chức năng cho bảng dữ liệu
-                    $('#dataTable').DataTable();
-
-                });
-            </Script>
 </body>
 
 </html>
+<!-- jQuery -->
+<script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery Easing -->
+<script src="~/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- DataTables -->
+<script src="~/Admin/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<Script>
+    @* $(document).ready(function () {
+        // Kích hoạt chức năng cho bảng dữ liệu
+        $('#dataTable').DataTable();
+
+    }); *@
+        // Hàm gọi API để lấy danh sách trạng thái
+        function GetStatus() {
+            $.ajax({
+                url: "http://localhost:5070/api/DuyetDangKy/get-sign-statuses", // URL của API mới
+                type: "GET",
+                success: function (response) {
+                    let select = $("#trangThai");
+                    select.empty().append('<option value="" selected>--Trạng thái--</option>');
+
+                    // Dữ liệu trả về là một mảng chuỗi đơn giản
+                    if (Array.isArray(response)) {
+                        response.forEach(statusText => {
+                            // Gán cả value và text là tên trạng thái
+                            select.append($('<option></option>').val(statusText).text(statusText));
+                        });
+                    }
+                },
+                error: function () {
+                    console.error("Không thể tải trạng thái duyệt đăng ký");
+                }
+            });
+        }
+
+    // Hàm định dạng ngày tháng
+    function formatDate(data) {
+        if (!data) return "";
+        var date = new Date(data);
+        var day = ("0" + date.getDate()).slice(-2);
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+        return day + '-' + month + '-' + year;
+    }
+
+    // Hàm này sẽ chạy sau khi trang đã tải xong
+    $(document).ready(function () {
+
+        // Khai báo một biến để lưu ID của góp ý đang được chọn
+        let selectedFeedbackId = null;
+
+        // Khởi tạo DataTable và lưu vào một biến
+        if ($.fn.DataTable.isDataTable('#dataTable')) {
+            $('#dataTable').DataTable().destroy();
+        }
+
+        @* var table = $('#dataTable').DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "http://localhost:5070/api/DuyetDangKy/get-sign-up",
+                "type": "GET",
+                "dataType": "json",
+                "dataSrc": ""
+            },
+            "columns": [
+                {
+                    "data": "registrationcode",
+                    "render": function (data, type, row) {
+                        return `<a href="#" class="feedback-link" data-id="${row.id}">${data}</a>`;
+                    }
+                },
+                { "data": "fullName" },
+                {
+                    "data": "createddate",
+                    "render": formatDate
+                }
+            ]
+        }); *@
+
+            // Gọi hàm để tải dữ liệu ban đầu
+            loadRegistrations()
+        function loadRegistrations() {
+            $.ajax({
+                url: "http://localhost:5070/api/DuyetDangKy/get-sign-up",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Kiểm tra nếu DataTable đã được khởi tạo
+                    if ($.fn.DataTable.isDataTable('#dataTable')) {
+                        var table = $('#dataTable').DataTable();
+                        table.clear().rows.add(data).draw();
+                    } else {
+                        $('#dataTable').DataTable({
+                            data: data,
+                            columns: [
+                                { data: "registrationcode" },
+                                { data: "fullName" },
+                                { data: "cardtype" },
+                                { data: "cccd" },
+                                {
+                                    data: "createddate",
+                                    render: function (data) {
+                                        return formatDate(data);
+                                    }
+                                },
+                                { data: "status" }
+                            ]
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi gọi API:", error);
+                }
+            });
+        }
+
+
+
+        // Gắn sự kiện click để MỞ MODAL
+        $('#dataTable tbody').on('click', 'a.feedback-link', function (e) {
+            e.preventDefault();
+            var feedbackId = $(this).data('id');
+
+            // Lưu ID vào biến toàn cục
+            selectedFeedbackId = feedbackId;
+
+            $.ajax({
+                url: `http://localhost:5070/api/DuyetDangKy/get-sign-details/${feedbackId}`,
+                type: 'GET',
+                success: function (response) {
+                    $('#modalTitle').text(response.title);
+                    $('#modalFullName').text(response.fullName);
+                    $('#modalEmail').text(response.email);
+                    $('#modalStatus').text(response.status);
+                    $('#modalDate').text(formatDate(response.createdDate));
+                    $('#modalContent').text(response.content);
+                    $('#feedbackModal').modal('show');
+                },
+                error: function () {
+                    alert('Không thể tải chi tiết góp ý.');
+                }
+            });
+        });
+
+        // Gắn sự kiện click cho nút DUYỆT
+        $('#approve-button').on('click', function () {
+            // Sử dụng biến toàn cục đã lưu
+            if (!selectedFeedbackId) {
+                alert('Không tìm thấy ID của góp ý.');
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:5070/api/DuyetDangKy/approve-sign/${selectedFeedbackId}`,
+                type: 'PUT',
+                success: function (response) {
+                    alert(response.message);
+                    $('#feedbackModal').modal('hide');
+                    table.ajax.reload(); // Tải lại bảng
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra, không thể duyệt góp ý.');
+                }
+            });
+        });
+
+
+        // Gọi hàm để đổ dữ liệu vào dropdown trạng thái
+        GetStatus();
+
+        // Xử lý cho ô chọn ngày (giữ nguyên)
+        $('#dateFrom').on('focus', function () { this.type = 'date'; }).on('blur', function () { if (!this.value) { this.type = 'text'; } });
+        $('#dateTo').on('focus', function () { this.type = 'date'; }).on('blur', function () { if (!this.value) { this.type = 'text'; } });
+    });
+    @* $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#dataTable')) {
+            $('#dataTable').DataTable().destroy();
+        }
+        $('#dataTable').DataTable({
+            // Thêm các cấu hình khác của bạn nếu có
+        });
+    }); *@
+</Script>
