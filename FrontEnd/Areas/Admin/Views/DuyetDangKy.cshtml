@@ -421,6 +421,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>convertStatus</td>
                                                         <!-- Dữ liệu mẫu -->
 
 
@@ -597,7 +603,12 @@
                                         return formatDate(data);
                                     }
                                 },
-                                { data: "status" }
+                                {
+                                    data: "status",
+                                    render: function (data) {
+                                        return convertStatus(data); // phải gọi ở đây
+                                    }
+                                }
                             ]
                         });
                     }
@@ -674,4 +685,30 @@
             // Thêm các cấu hình khác của bạn nếu có
         });
     }); *@
+        function convertStatus(statusCode) {
+    let text = "";
+    let badgeClass = "";
+
+    switch (String(statusCode)) {
+        case "1":
+            text = "Đã duyệt";
+            badgeClass = "badge-success"; // xanh lá
+            break;
+        case "2":
+            text = "Chờ duyệt";
+            badgeClass = "badge-warning"; // cam
+            break;
+        case "4":
+            text = "Từ chối";
+            badgeClass = "badge-danger"; // đỏ
+            break;
+        default:
+            text = "Không xác định";
+            badgeClass = "badge-secondary";
+    }
+
+    return `<span class="badge ${badgeClass}" style="border-radius: 9px; padding: 5px 10px;">${text}</span>`;
+}
+
+
 </Script>
