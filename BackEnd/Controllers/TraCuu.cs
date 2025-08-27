@@ -11,11 +11,11 @@ namespace apithethuvien.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DuyetDangKyController : ControllerBase
+    public class TraCuuBaoCaoController : ControllerBase
     {
 
-        [HttpGet("get-sign-up")]
-        public virtual async Task<List<GetRegistration>> GetRegistations()
+        [HttpGet("get-look-up")]
+        public virtual async Task<List<GetReport>> GetRegistations()
         {
             var connection = new Connection();
             if (!connection.OpenConnection())
@@ -26,13 +26,13 @@ namespace apithethuvien.Controllers
             try
             {
                 var sql = @"
-                    SELECT id, registrationcode, fullname, cardtype, cccd, createddate, status 
+                    SELECT id, registrationcode, fullname, cardtype, tel, createddate, status 
                     FROM car_register
                     ORDER BY createddate DESC";
 
                 using (var conn = connection.GetConnection())
                 {
-                    var feedbackList = await conn.QueryAsync<GetRegistration>(sql);
+                    var feedbackList = await conn.QueryAsync<GetReport>(sql);
                     return feedbackList.ToList();
                 }
             }
@@ -48,7 +48,7 @@ namespace apithethuvien.Controllers
 
 
 
-        [HttpGet("get-sign-details/{id}")]
+        [HttpGet("get-report-details/{id}")]
         public virtual async Task<IActionResult> GetFeedbackDetail(string id)
         {
             var connection = new Connection();
@@ -67,7 +67,7 @@ namespace apithethuvien.Controllers
 
                 if (await reader.ReadAsync())
                 {
-                    var feedbackDetail = new GetRegistration
+                    var feedbackDetail = new GetReport
                     {
                         id = reader.GetString(reader.GetOrdinal("id")),
                         fullName = reader.GetString(reader.GetOrdinal("fullname")),
@@ -75,7 +75,7 @@ namespace apithethuvien.Controllers
                         createddate = reader.GetDateTime(reader.GetOrdinal("createddate")),
                         registrationcode = reader.GetString(reader.GetOrdinal("registrationcode")),
                         cardtype = reader.GetString(reader.GetOrdinal("cardtype")),
-                        cccd = reader.GetString(reader.GetOrdinal("cccd"))
+                        tel = reader.GetString(reader.GetOrdinal("tel"))    
                     };
                     await reader.CloseAsync();
                     return Ok(feedbackDetail);
@@ -97,7 +97,7 @@ namespace apithethuvien.Controllers
             }
         }
 
-        [HttpPut("approve-sign/{id}")]
+        [HttpPut("approve-lookup/{id}")]
         public virtual async Task<IActionResult> ApproveFeedback(string id)
         {
             // Sử dụng chuỗi kết nối trực tiếp và Dapper cho an toàn và ngắn gọn
@@ -112,11 +112,11 @@ namespace apithethuvien.Controllers
 
                 if (affectedRows > 0)
                 {
-                    return Ok(new { message = "Duyệt thẻ thành công." });
+                    return Ok(new { message = "Tra cứu thành công." });
                 }
                 else
                 {
-                    return NotFound(new { message = "Không tìm thấy thẻ để duyệt." });
+                    return NotFound(new { message = "Không tìm thấy báo cáo." });
                 }
             }
             catch (System.Exception ex)
@@ -124,7 +124,7 @@ namespace apithethuvien.Controllers
                 return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
-        [HttpGet("get-sign-statuses")]
+        [HttpGet("get-report-statuses")]
         public virtual async Task<IActionResult> GetFeedbackStatuses()
         {
             var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=123;Database=OCRP";
