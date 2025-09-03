@@ -1,9 +1,10 @@
 ﻿using apithethuvien.Controllers;
 using apithethuvien.Dto;
-using Dapper;
+using Dapper; // <-- THÊM DÒNG NÀY
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace apithethuvien.Controllers
@@ -12,48 +13,57 @@ namespace apithethuvien.Controllers
     [ApiController]
     public class QuanLyGopYController : ControllerBase
     {
-        
-        [HttpGet("get-all-feedback")]
-        public virtual async Task<List<CardFeedbackModel>> GetAllFeedback()
-        {
-            var connection = new Connection();
-            if (!connection.OpenConnection())
-            {
-                throw new System.Exception("Không thể kết nối đến cơ sở dữ liệu.");
-            }
 
+        [HttpGet("get-all-feedback")]
+        public virtual async Task<IActionResult> GetAllFeedback(
+            [FromQuery] string? keyword,
+            [FromQuery] string? status,
+            [FromQuery] string? dateFrom,
+            [FromQuery] string? dateTo)
+        {
+            var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=huy2712004vp;Database=OCRP";
             try
             {
-                var sql = "SELECT id, title, fullname, createddate FROM car_feedback ORDER BY createddate DESC";
-                var cmd = new NpgsqlCommand(sql, connection.GetConnection());
-                var reader = await cmd.ExecuteReaderAsync();
+                var sqlBuilder = new StringBuilder("SELECT id, title, fullname, createddate, status FROM car_feedback WHERE 1=1");
+                var parameters = new DynamicParameters();
 
-                var feedbackList = new List<CardFeedbackModel>();
-                while (await reader.ReadAsync())
+                if (!string.IsNullOrEmpty(keyword))
                 {
-                    var feedback = new CardFeedbackModel
-                    {
-                        Id = reader.GetString(reader.GetOrdinal("id")),
-                        Title = reader.GetString(reader.GetOrdinal("title")),
-                        FullName = reader.GetString(reader.GetOrdinal("fullname")),
-                        CreatedDate = reader.GetDateTime(reader.GetOrdinal("createddate"))
-                    };
-                    feedbackList.Add(feedback);
+                    sqlBuilder.Append(" AND (title ILIKE @Keyword OR fullname ILIKE @Keyword)");
+                    parameters.Add("Keyword", $"%{keyword}%");
                 }
-                await reader.CloseAsync();
-                return feedbackList;
+
+                if (!string.IsNullOrEmpty(status))
+                {
+                    sqlBuilder.Append(" AND status = @Status");
+                    parameters.Add("Status", status);
+                }
+
+                if (DateTime.TryParse(dateFrom, out var startDate))
+                {
+                    sqlBuilder.Append(" AND createddate >= @StartDate");
+                    parameters.Add("StartDate", startDate);
+                }
+
+                if (DateTime.TryParse(dateTo, out var endDate))
+                {
+                    sqlBuilder.Append(" AND createddate <= @EndDate");
+                    parameters.Add("EndDate", endDate.Date.AddDays(1).AddTicks(-1)); // Lấy đến cuối ngày
+                }
+
+                sqlBuilder.Append(" ORDER BY createddate DESC");
+
+                await using var connection = new NpgsqlConnection(connectionString);
+                var result = await connection.QueryAsync<CardFeedbackModel>(sqlBuilder.ToString(), parameters);
+                return Ok(result);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                throw new System.Exception("Lỗi khi truy vấn car_feedback", ex);
-            }
-            finally
-            {
-                connection.CloseConnection();
+                return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
 
-        
+
         [HttpGet("get-feedback-detail/{id}")]
         public virtual async Task<IActionResult> GetFeedbackDetail(string id)
         {
@@ -101,7 +111,6 @@ namespace apithethuvien.Controllers
                 connection.CloseConnection();
             }
         }
-
         [HttpPut("approve-feedback/{id}")]
         public virtual async Task<IActionResult> ApproveFeedback(string id)
         {

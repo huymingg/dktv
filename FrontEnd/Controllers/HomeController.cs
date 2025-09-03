@@ -13,7 +13,7 @@ namespace home.Controllers
         {
             _logger = logger;
         }
-        [Route("")]
+            [Route("")]
         public IActionResult PublicHome()
         {
             return View("Views/Home/public_home.cshtml");
